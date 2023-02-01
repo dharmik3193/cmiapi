@@ -9,7 +9,7 @@ var debug = require('debug')('cmi-api:server');
 var http = require('http');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/cmi');
+mongoose.connect('mongodb+srv://codesign:Cmi%402310@cmi.pevaj3k.mongodb.net/cmi');
 console.log("DB Connected !!!");
 
 /**
