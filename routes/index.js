@@ -1,4 +1,5 @@
 var express = require('express');
+const blog = require('../models/blogSchema');
 const catagory = require('../models/catagorySchema');
 const course = require('../models/courseSchema');
 const inquiry = require('../models/inquirySchema');
@@ -146,6 +147,42 @@ router.get('/newsletter', async (req, res, next) => {
     })
   } catch (error) {
     res.json({ error })
+  }
+})
+
+router.post('/add_blog',async (req,res,next)=>{
+  try {
+    var data = await blog.create(req.body);
+    res.json({
+      status:"Success",
+      data
+    })
+  } catch (error) {
+    res.json({error})
+  }
+})
+
+router.get('/get_blog',async (req,res,next)=>{
+  try {
+    var data = await blog.find();
+    res.json({
+      status:"Success",
+      data
+    })
+  } catch (error) {
+    res.json({error})
+  }
+})
+
+router.get('/blog/:id',async (req,res,next)=>{
+  try {
+    var data = await blog.findById(req.params);
+    res.json({
+      status:"Success",
+      data
+    })
+  } catch (error) {
+    res.json({error})
   }
 })
 
