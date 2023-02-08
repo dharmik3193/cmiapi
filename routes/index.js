@@ -1,6 +1,7 @@
 var express = require('express');
 const blog = require('../models/blogSchema');
 const catagory = require('../models/catagorySchema');
+const contact = require('../models/contactSchema');
 const course = require('../models/courseSchema');
 const inquiry = require('../models/inquirySchema');
 const newsletter = require('../models/newsletterSchema');
@@ -180,6 +181,30 @@ router.get('/blog/:id',async (req,res,next)=>{
     res.json({
       status:"Success",
       data
+    })
+  } catch (error) {
+    res.json({error})
+  }
+})
+
+router.post('/contact',async (req,res,next)=>{
+  try {
+      var data = await contact.create(req.body);
+      res.json({
+        status:"Success",
+        data
+      })
+  } catch (error) {
+      res.json({error})
+  }
+})
+
+router.get('/get_contact',async (req,res,next)=>{
+  try {
+    var data = await contact.find();
+    res.json({
+      status:"Success",
+      data  
     })
   } catch (error) {
     res.json({error})
