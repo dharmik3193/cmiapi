@@ -5,6 +5,7 @@ const contact = require('../models/contactSchema');
 const course = require('../models/courseSchema');
 const inquiry = require('../models/inquirySchema');
 const newsletter = require('../models/newsletterSchema');
+const review = require('../models/reviewSchema');
 var router = express.Router();
 
 /* GET home page. */
@@ -202,6 +203,30 @@ router.post('/contact',async (req,res,next)=>{
 router.get('/get_contact',async (req,res,next)=>{
   try {
     var data = await contact.find();
+    res.json({
+      status:"Success",
+      data  
+    })
+  } catch (error) {
+    res.json({error})
+  }
+})
+
+router.post('/add_review',async (req,res,next)=>{
+  try {
+      var data = await review.create(req.body);
+      res.json({
+        status:"Success",
+        data
+      })
+  } catch (error) {
+      res.json({error})
+  }
+})
+
+router.get('/get_review',async (req,res,next)=>{
+  try {
+    var data = await review.find();
     res.json({
       status:"Success",
       data  
