@@ -178,7 +178,7 @@ router.get('/get_blog',async (req,res,next)=>{
 
 router.get('/blog/:id',async (req,res,next)=>{
   try {
-    var data = await blog.findById(req.params);
+    var data = await blog.findById(req.params.id);
     res.json({
       status:"Success",
       data

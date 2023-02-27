@@ -10,7 +10,7 @@ const reviewSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    subject: {
+    review: {
         type: String,
         required: true
     },
