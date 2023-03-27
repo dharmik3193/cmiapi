@@ -44,6 +44,9 @@ const courseSchema = new mongoose.Schema({
                }
           }
      ],
+     what_learn:{
+          type:String
+     },
      level: {
           type: String,
           required: true
@@ -55,7 +58,17 @@ const courseSchema = new mongoose.Schema({
      rating: {
           type: Number,
           required: true
-     }
+     },
+     faq:[
+          {
+               que:{
+                    type:String
+               },
+               ans:{
+                    type:String
+               }
+          }
+     ],
 })
 
 var course = mongoose.model("course", courseSchema);
