@@ -31,9 +31,19 @@ const courseSchema = new mongoose.Schema({
           required: true
      },
      description: {
-          type: String,
-          required: true
+          type:Array,
+          required:true
      },
+     topics:[
+          {
+               main:{
+                    type:String
+               },
+               sub:{
+                    type:Array
+               }
+          }
+     ],
      level: {
           type: String,
           required: true
