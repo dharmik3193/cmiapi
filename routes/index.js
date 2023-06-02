@@ -6,7 +6,12 @@ const course = require('../models/courseSchema');
 const inquiry = require('../models/inquirySchema');
 const newsletter = require('../models/newsletterSchema');
 const review = require('../models/reviewSchema');
+const PDF = require('../models/pdfSchema');
 var router = express.Router();
+const multer = require('multer');
+const fs = require('fs');
+
+const upload = multer({ dest: 'uploads/' });
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -14,7 +19,6 @@ router.get('/', function (req, res, next) {
     data:"Success"
   })
 });
-
 
 router.post('/add_course', async function (req, res, next) {
   try {
@@ -235,5 +239,71 @@ router.get('/get_review',async (req,res,next)=>{
     res.json({error})
   }
 })
+
+router.post('/upload', upload.single('file'), async (req, res) => {
+  const file = req.file;
+  const pdfId = req.body.pdfId; // Assuming the PDF ID is sent in the request body
+  
+  // Check if a file and PDF ID were provided
+  if (!file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  if (!pdfId) {
+    return res.status(400).json({ error: 'No PDF ID provided' });
+  }
+  
+  // Rename the uploaded file to include the .pdf extension
+  const originalFilePath = file.path;
+  const newFilePath = `${originalFilePath}.pdf`;
+  
+  fs.renameSync(originalFilePath, newFilePath);
+  
+  // Create a new PDF document
+  const pdf = new PDF({
+    pdfId,
+    filePath: newFilePath,
+  });
+  
+  // Save the PDF document to the database
+  try {
+    await pdf.save();
+    return res.json({ message: 'File uploaded successfully', pdfId });
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to upload file' });
+  }
+});
+
+router.get('/download/:pdfId', async (req, res) => {
+  const pdfId = req.params.pdfId;
+
+  try {
+    // Find the PDF document by PDF ID
+    const pdf = await PDF.findOne({ pdfId });
+
+    // Check if the PDF document exists
+    if (!pdf) {
+      return res.status(404).json({ error: 'PDF not found' });
+    }
+
+    // Get the file path from the PDF document
+    const filePath = pdf.filePath;
+
+    // Check if the file exists
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ error: 'File not found' });
+    }
+
+    // Set the appropriate headers for the response
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=${pdfId}.pdf`);
+
+    // Create a read stream from the file path and pipe it to the response
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.pipe(res);
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to download file' });
+  }
+});
+
 
 module.exports = router;
