@@ -6,6 +6,6 @@ const pdfSchema = new mongoose.Schema({
   });
   
   // Create a PDF model based on the schema
-  const PDF = mongoose.model('PDF', pdfSchema);
+  const PDF = mongoose.model('PDF', pdfSchema)
 
   module.exports = PDF;
