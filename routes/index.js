@@ -222,9 +222,9 @@ router.post('/add_review',async (req,res,next)=>{
       res.json({
         status:"Success",
         data
-      })
+      });
   } catch (error) {
-      res.json({error})
+      res.json({error});
   }
 })
 
@@ -263,7 +263,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     pdfId,
     filePath: newFilePath,
   });
-  
+  DiffieHellmanGroup;
   // Save the PDF document to the database
   try {
     await pdf.save();
