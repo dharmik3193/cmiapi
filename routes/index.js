@@ -10,6 +10,7 @@ const PDF = require('../models/pdfSchema');
 var router = express.Router();
 const multer = require('multer');
 const fs = require('fs');
+const Certificate = require('../models/certificateSchema');
 
 const upload = multer({ dest: 'uploads/' });
 
@@ -305,5 +306,29 @@ router.get('/download/:pdfId', async (req, res) => {
   }
 });
 
+router.post('/add_certificate',async (req,res,next)=>{
+  try {
+      var data = await Certificate.create(req.body);
+      res.json({
+        status:"Success",
+        data
+      });
+  } catch (error) {
+      res.json({error});
+  }
+})
+
+router.get('/get_certificate/:regId',async (req,res,next)=>{
+  try {
+    var regId = req.params.regId;
+    var data = await Certificate.find({regId});
+    res.json({
+      status:"Success",
+      data  
+    })
+  } catch (error) {
+    res.json({error})
+  }
+})
 
 module.exports = router;
