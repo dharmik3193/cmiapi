@@ -72,10 +72,10 @@ router.post('/add-inquiry-narsang', async (req, res) => {
       res.json({ message: 'Email sent successfully' });
     }
   });
-      res.json({
-        status:"Success",
-        data
-      })
+      // res.json({
+      //   status:"Success",
+      //   data
+      // })
   } catch (error) {
       res.json({error})
   }
