@@ -2,6 +2,7 @@ var express = require('express');
 const sardar = require('../models/sardarSchema');
 const narsang = require('../models/narsangSchema');
 const nodemailer = require('nodemailer');
+const pwd = "Dharmik#8814"
 var router = express.Router();
 
 /* GET users listing. */
@@ -45,7 +46,7 @@ router.post('/add-inquiry-narsang', async (req, res) => {
     secure: true, // use TLS
     auth: {
       user: "others@codesignmultimedia.com",
-      pass: "Dharmik#8814",
+      pass: pwd,
     },
     tls: {
       // do not fail on invalid certs
