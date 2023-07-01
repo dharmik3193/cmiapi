@@ -34,24 +34,10 @@ router.get('/get-inquiry-si', async (req, res, next) => {
 })
 
 router.post('/add-inquiry-narsang', async (req, res) => {
-  // try {
-  // var data = await narsang.create(req.body);
+  try {
+  var data = await narsang.create(req.body);
 
   const { name, email, message, subject, mobile } = req.body;
-
-  // const transporter = nodemailer.createTransport({
-  //   service: 'mail.codesignmultimedia.com', // e.g., 'Gmail'
-  //   auth: {
-  //     user: 'others@codesignmultimedia.com',
-  //     pass: 'Dharmik#8814',
-  //   },
-  //   secureConnection: 'false',
-  //   tls: {
-  //     ciphers: 'SSLv3',
-  //     rejectUnauthorized: false
-
-  //   }
-  // });
 
   const transporter = nodemailer.createTransport({
     host: "mail.codesignmultimedia.com",
@@ -85,13 +71,13 @@ router.post('/add-inquiry-narsang', async (req, res) => {
       res.json({ message: 'Email sent successfully' });
     }
   });
-  //     res.json({
-  //       status:"Success",
-  //       data
-  //     })
-  // } catch (error) {
-  //     res.json({error})
-  // }
+      res.json({
+        status:"Success",
+        data
+      })
+  } catch (error) {
+      res.json({error})
+  }
 })
 
 
