@@ -58,7 +58,7 @@ router.post('/add-inquiry-narsang', async (req, res) => {
 
   const mailOptions = {
     from: from,
-    to: "dnbambharoliya555@gmail.com",
+    to: "narsangoverseas01@gmail.com",
     subject: `${subject}`,
     text: `Name: ${name}\nEmail: ${email}\nMobile: ${mobile}\nSubject: ${subject}\nMessage: ${message}`,
   };
